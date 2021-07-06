@@ -1,5 +1,5 @@
 import time
-
+import boto3
 start = time.time()
 
 while True:
