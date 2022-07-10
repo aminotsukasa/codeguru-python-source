@@ -1,0 +1,22 @@
+def execute_query_noncompliant(request):
+    import sqlite3
+    name = request.GET.get("name")
+    query = "SELECT * FROM Users WHERE name = " + name + ";"
+    with sqlite3.connect("example.db") as connection:
+        cursor = connection.cursor()
+        # Noncompliant: user input is used without sanitization.
+        cursor.execute(query)
+        connection.commit()
+        connection.close()
+
+        
+        
+def exec_command_noncompliant():
+    from paramiko import client
+    from flask import request
+    address = request.args.get("address")
+    cmd = "ping -c 1 %s" % address
+    client = client.SSHClient()
+    client.connect("ssh.samplehost.com")
+    # Noncompliant: address argument is not sanitized.
+    client.exec_command(cmd)
