@@ -22,3 +22,13 @@ def exec_command_noncompliant():
     client.connect("ssh.samplehost.com")
     # Noncompliant: address argument is not sanitized.
     client.exec_command(cmd)
+
+    
+    
+@app.route('/redirect')
+def redirect_url_noncompliant():
+    from flask import request, redirect
+    endpoint = request.args['url']
+    # リクエストから取得したパラメータをそのままレスポンスとして返却
+    # Noncompliant: redirect to a user-supplied URL without sanitization.
+    return redirect(endpoint)
