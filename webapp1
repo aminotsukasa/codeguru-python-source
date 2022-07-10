@@ -1,0 +1,9 @@
+def exec_command_noncompliant():
+    from paramiko import client
+    from flask import request
+    address = request.args.get("address")
+    cmd = "ping -c 1 %s" % address
+    client = client.SSHClient()
+    client.connect("ssh.samplehost.com")
+    # Noncompliant: address argument is not sanitized.
+    client.exec_command(cmd)
